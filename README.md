@@ -11,7 +11,11 @@ For R programmming:
 - Download RStudio from the [RStudio Download page](https://www.rstudio.com/products/rstudio/download/)
 ## Canvas
 
+<<<<<<< HEAD
 Canvas Links: [Canvas](https://vinuni.instructure.com/courses/2819)
+=======
+Canvas to course [Data2010](https://vinuni.instructure.com/courses/2819/assignments)
+>>>>>>> f0c17b4 (update week 2 tasks, canvas link)
 
 ## Homework Problem Sets
 
