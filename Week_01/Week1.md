@@ -84,9 +84,9 @@ Add appropriate title and axis labels.
 
 ### Deliverables
 
-Submit choosing one method below to submit:
+Submit both type Python and R and zip in a file:
 
 - A Jupyter Notebook (`Week1_Tasks.ipynb`).
-- An Rmd Script (`Week1_Tasks.Rmd`).
+- An Rmd Script (`Week1_Tasks.Rmd`) and Pdf file (`Week1_Tasks.pdf`).
 
 File should include solutions to all 9 tasks.
