@@ -11,6 +11,8 @@ For R programmming:
 - Download RStudio from the [RStudio Download page](https://www.rstudio.com/products/rstudio/download/)
 ## Canvas
 
+Canvas Links: [Canvas](https://vinuni.instructure.com/courses/2819)
+
 ## Homework Problem Sets
 
 | Weeks | Problem Set | Dataset | Deadline |
