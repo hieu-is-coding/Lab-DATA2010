@@ -1,10 +1,10 @@
 ## Week 2 Tasks
 
-Using dataset [Uber Data Analytics Dashboard](https://www.kaggle.com/datasets/yashdevladdha/uber-ride-analytics-dashboard/data) in examples
+Using dataset [Uber Data Analytics Dashboard](https://www.kaggle.com/datasets/yashdevladdha/uber-ride-analytics-dashboard/data) in examples or using some dataset you find interest.
 
 You can using kaggle to access to dataset or just downloading it to use
 
-The main point of these tasks it to predict canncellation by driver
+The main point of these tasks it to doing a process in Data Science
 
 ### Task 1 – Get the data and print out first five row
 
@@ -15,22 +15,21 @@ The main point of these tasks it to predict canncellation by driver
 
 ---
 
-### Task 3 – Process time to hour, day, month, is_weekend, weekdays
+### Task 3 – Data Clearning 
+
+Remove Nah, Null, duplicate values or some features don't need in the dataset
 
 ---
 
-### Task 4 – Using matplotlib to show (VTAT) Vehicle Time at Arrival Over Time (Time-series)
+### Task 4 –  Exploratory Data Analysis (EDA)
 
 ---
 
-### Task 5 – Define target for driver cancellation and check its distribution
-
+### Task 5 – Data Visualization
 
 ---
 
-### Task 6 – EDA for Customer Cancellations
-
-- Showing Cancellation Rate by Vehicle Type, Cancellation Rate by Hour, Cancellation Rate by Day of Week, Driver Rating vs Driver Cancellation
+### Task 6 – Handle Class Imbalance
 
 ---
 
@@ -44,16 +43,19 @@ The main point of these tasks it to predict canncellation by driver
 
 ---
 
-### Task 8 – Balance Class Weights
+
+### Task 8 – Model Prediction
 
 
 ---
 
-### Task 9 – Model Prediction
-
+### Task 9 - Evaluation
 
 ---
 
+### Task 10 - Highlight findings and model insights
+
+---
 
 ### Deliverables
 
