@@ -1,6 +1,6 @@
 ---
 title: "Week 1 Tasks - Data Science Programming"
-author: "[Your Name Here]"
+author: "Pham Minh Hieu"
 date: "`r Sys.Date()`"
 output:
   pdf_document: default
@@ -28,6 +28,7 @@ Write a program that prints: "Welcome to Data Science Programming!"
 ```{r task1}
 # Task 1: Hello World
 # Write your code here
+"Welcome to Data Science Programming!"
 
 ```
 
@@ -41,6 +42,9 @@ Calculate and print the result of: - 15 + 23 - 120 / 6\
 ```{r task2}
 # Task 2: Simple Math
 # Write your code here
+15+23
+120/6
+5^3
 
 ```
 
@@ -55,6 +59,8 @@ Print the vector and the sum of its elements.
 ```{r task3}
 # Task 3: Variables and Vectors
 # Write your code here
+a <- c(10, 20, 30, 40, 50)
+sum(a)
 
 ```
 
@@ -69,7 +75,8 @@ Plot the numbers against their squares using the `plot()` function.
 ```{r task4}
 # Task 4: Plot Squares
 # Write your code here
-
+a <- c(1:10)
+plot(a^2)
 ```
 
 ------------------------------------------------------------------------
@@ -83,7 +90,8 @@ Display the first 5 rows.
 ```{r task5}
 # Task 5: Load Dataset
 # Write your code here
-
+student_scores <- read.csv(file = "examples/student_scores.csv")
+student_scores[c(1:5),c(1,2)]
 ```
 
 ------------------------------------------------------------------------
@@ -97,6 +105,9 @@ Print the minimum and maximum scores.
 ```{r task6}
 # Task 6: Summary Statistics
 # Write your code here
+mean(student_scores$Score)
+min(student_scores$Score)
+max(student_scores$Score)
 
 ```
 
@@ -109,7 +120,10 @@ Find and print the names of students who scored greater than 80.
 ```{r task7}
 # Task 7: Filtering Data
 # Write your code here
+library(dplyr)
 
+excel_students <- student_scores |> filter(Score > 80)
+excel_students
 ```
 
 ------------------------------------------------------------------------
@@ -123,7 +137,8 @@ Display the top 3 students.
 ```{r task8}
 # Task 8: Sorting Data
 # Write your code here
-
+sorted_score <- student_scores |> arrange(desc(Score))
+sorted_score[c(0:3),]
 ```
 
 ------------------------------------------------------------------------
@@ -137,7 +152,14 @@ Add appropriate title and axis labels.
 ```{r task9}
 # Task 9: Visualization
 # Write your code here
-
+hist(
+  student_scores$Score,
+  main = "All Student Scores",
+  xlab = "Score",
+  ylab = "No of Students",
+  col = "lightblue",
+  border = "black"
+)
 ```
 
 ------------------------------------------------------------------------
