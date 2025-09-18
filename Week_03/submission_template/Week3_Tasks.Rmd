@@ -1,0 +1,140 @@
+---
+title: "Week 3 Tasks — Data Preparation, EDA, and Intro Modeling (R)"
+author: "Your Name"
+output:
+  pdf_document: default
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(lubridate)
+library(broom)
+theme_set(theme_minimal())
+```
+
+# Instructions
+
+- Use this template to complete Week 3 tasks. Replace placeholders with your work.
+- Ensure the document can knit top-to-bottom without errors.
+- Add short captions/annotations below each plot and metric output.
+
+# Task 1 — Load Data and Inspect
+
+```{r load-data}
+# TODO: Set path and read your dataset
+# Example:
+# data <- read_csv("path/to/your.csv")
+# head(data, 10)
+# dim(data)
+```
+
+Briefly describe the dataset, its purpose, and key variables.
+
+# Task 2 — Data Types, Summary Stats, and Missingness
+
+```{r types-summary-missing}
+# Glimpse types
+# glimpse(data)
+
+# Summary statistics (numeric and categorical)
+# summary(data)
+
+# Missingness per column
+# tibble(col = names(data), n_missing = colSums(is.na(data))) %>%
+#   mutate(p_missing = n_missing / nrow(data)) %>%
+#   arrange(desc(p_missing))
+```
+
+# Task 3 — Data Cleaning
+
+```{r cleaning}
+# Examples:
+# data <- distinct(data)
+# names(data) <- names(data) %>%
+#   tolower() %>% str_replace_all(" ", "_") %>% str_trim()
+# data <- data %>% mutate(num_col = if_else(is.na(num_col), median(num_col, na.rm = TRUE), num_col))
+```
+
+# Task 4 — Exploratory Data Analysis (EDA)
+
+```{r eda}
+# Example univariate
+# data %>% ggplot(aes(numeric_col)) + geom_histogram(binwidth = 5, fill = "#2c7fb8") +
+#   labs(title = "Distribution of numeric_col", x = "numeric_col", y = "Count")
+
+# Example bivariate
+# ggplot(data, aes(x = xvar, y = yvar)) +
+#   geom_point(alpha = 0.6) +
+#   geom_smooth(method = "lm", se = FALSE, color = "#fc8d59") +
+#   labs(title = "xvar vs yvar")
+```
+
+Write 3–5 short observations from EDA here.
+
+# Task 5 — Data Visualization
+
+```{r viz}
+# Create at least 2 clear plots with captions below
+# data %>% count(category) %>%
+#   ggplot(aes(x = fct_reorder(category, n), y = n)) + geom_col(fill = "#7fcdbb") +
+#   coord_flip() + labs(title = "Counts by category", x = "Category", y = "Count")
+```
+
+Key takeaway:
+
+# Task 6 — Class Imbalance (if applicable)
+
+```{r imbalance}
+# If classification target exists
+# data %>% count(target) %>% mutate(p = n/sum(n))
+```
+
+# Task 7 — Feature Engineering
+
+```{r fe}
+# Examples: date parts, one-hot via model.matrix, binning
+# data <- data %>% mutate(month = month(date_col), desc_len = nchar(text_col))
+```
+
+# Task 8 — Baseline Modeling
+
+```{r baseline}
+# Example classification baseline (edit to your data)
+# target <- "target"
+# numeric <- c("num1", "num2")
+# categorical <- c("cat1", "cat2")
+# dfm <- data %>% select(all_of(c(numeric, categorical, target))) %>% drop_na(all_of(c(numeric, categorical, target)))
+
+# # Simple train/test split
+# set.seed(42)
+# idx <- sample(nrow(dfm), size = floor(0.8 * nrow(dfm)))
+# train <- dfm[idx, ]
+# test  <- dfm[-idx, ]
+
+# # One-hot encode categoricals for glm
+# X <- model.matrix(as.formula(paste(target, "~ .")), data = train %>% select(-all_of(target)))[, -1]
+# y <- train[[target]]
+# fit <- glm(y ~ ., data = as.data.frame(cbind(y = y, X)), family = binomial())
+```
+
+# Task 9 — Evaluation
+
+```{r eval}
+# Example: predicted probabilities and simple metrics
+# X_test <- model.matrix(as.formula(paste(target, "~ .")), data = test %>% select(-all_of(target)))[, -1]
+# preds <- predict(fit, newdata = as.data.frame(X_test), type = "response")
+# pred_class <- if_else(preds > 0.5, 1, 0)
+# acc <- mean(pred_class == test[[target]])
+# tibble(accuracy = acc)
+```
+
+Provide a 2–4 sentence interpretation of the metrics and what they imply.
+
+# Task 10 — Findings and Next Steps
+
+Summarize 3–5 insights from EDA and modeling. Propose 2 concrete next steps to improve the analysis or model.
+
+
