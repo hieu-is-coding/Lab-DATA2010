@@ -1,74 +1,75 @@
-## Week 3 Tasks
+## Week 3 Tasks — Data Preparation, EDA, and Intro Modeling (R)
 
-Using dataset [Uber Data Analytics Dashboard](https://www.kaggle.com/datasets/yashdevladdha/uber-ride-analytics-dashboard/data) in examples or using some dataset you find interest.
+Week 3 mirrors Week 2’s workflow, but your submission must be in R Markdown. Choose a dataset you find interesting (or reuse the Week 2 dataset). Focus on a clean, reproducible analysis that runs top‑to‑bottom.
 
-You can using kaggle to access to dataset or just downloading it to use
+Reference dataset (optional): [Uber Data Analytics Dashboard](https://www.kaggle.com/datasets/yashdevladdha/uber-ride-analytics-dashboard/data)
 
-The main point of these tasks it to doing a process in Data Science
-
-### Task 1 – Get the data and print out first five row
-
-Access the data to get it information
+Guidance:
+- Prefer tidy/tabular data. Perform light cleaning before EDA if needed.
+- Keep code reproducible; avoid manual steps.
 
 ---
 
-### Task 2 – Data Types, Summary Stats, and Null Values
-
-Check the type of data the dataset use
----
-
-### Task 3 – Data Clearning 
-
-Remove Nah, Null, duplicate values or some features don't need in the dataset
+### Task 1 — Load Data and Inspect
+- Load the dataset and show the first 5–10 rows and shape/dimensions.
+- Briefly describe the purpose of the dataset and key variables.
 
 ---
 
-### Task 4 –  Exploratory Data Analysis (EDA)
-
-Viewing data characteristics
-
----
-
-### Task 5 – Data Visualization
-
-Demonstrate some features and insights
----
-
-### Task 6 – Handle Class Imbalance
-Handing imbalance data before putting in model
+### Task 2 — Data Types, Summary Stats, and Missingness
+- Check and correct data types.
+- Provide summary statistics for numeric/categorical columns.
+- Report missing value counts and percentages per column.
 
 ---
 
-### Task 7 – Feature Engineering
-Some features need to change type and cleaning before putting in model
-Examples:
-- One-hot Encoding Vehicle Type
-
-- Replace NaNs in numeric columns with placeholder
-
-- Drop columns not needed for modeling
+### Task 3 — Data Cleaning
+- Handle missing values and duplicates.
+- Standardize column names and fix inconsistent categorical labels.
+- Briefly document cleaning decisions.
 
 ---
 
-
-### Task 8 – Model Prediction
-Training and predicting with some models
+### Task 4 — Exploratory Data Analysis (EDA)
+- Explore distributions of key variables and relationships among them.
+- Write 3–5 short observations.
 
 ---
 
-### Task 9 - Evaluation
-Evaluate the models results and benchmark them
+### Task 5 — Data Visualization
+- Create at least 2 plots with clear captions.
+
 ---
 
-### Task 10 - Highlight findings and model insights
-Write down some findings and insights you found in this dataset, model 
+### Task 6 — Class Imbalance (if applicable)
+- If classification target exists, assess class proportions and apply one strategy if imbalance exists.
+
+---
+
+### Task 7 — Feature Engineering
+- Create/transform at least 2 features useful for modeling; drop irrelevant columns if needed.
+
+---
+
+### Task 8 — Baseline Modeling
+- Train a simple baseline model suitable for your problem (classification or regression). Show training code and predictions.
+
+---
+
+### Task 9 — Evaluation
+- Use appropriate metrics and provide a short interpretation (2–4 sentences).
+
+---
+
+### Task 10 — Findings and Next Steps
+- Summarize 3–5 insights and propose 2 next steps to improve the analysis/model.
 
 ---
 
 ### Deliverables
 
-Submit choosing one method below to submit:
+Submit an R Markdown document only (template provided in `Week_03/submission_template/`):
 
-- A R markdown file (`Week3_Tasks.Rmd`) and a pdf file (`Week3_Tasks.pdf`) .
+- `Week3_Tasks.Rmd` (knit to PDF)
 
-File should include solutions to all tasks.
+Your submission must include solutions to all tasks, with runnable code and brief annotations under plots and results.
