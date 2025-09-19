@@ -1,0 +1,241 @@
+---
+title: "Week 1 Tasks - Data Science Programming (SOLUTION)"
+author: "[Your Name Here]"
+date: "[Date]"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Introduction
+
+This document contains complete solutions to all Week 1 tasks using the `student_scores.csv` dataset.
+
+# Task 1 – Hello World
+
+Write a program that prints: "Welcome to Data Science Programming!"
+
+```{r task1}
+# Task 1: Hello World
+print("Welcome to Data Science Programming!")
+```
+
+# Task 2 – Simple Math
+
+Calculate and print the result of:
+- 15 + 23
+- 120 / 6  
+- 5³ (5 to the power of 3)
+
+```{r task2}
+# Task 2: Simple Math
+cat("15 + 23 =", 15 + 23, "\n")
+cat("120 / 6 =", 120 / 6, "\n")
+cat("5^3 =", 5^3, "\n")
+```
+
+# Task 3 – Variables and Lists/Vectors
+
+Create a vector of 5 numbers: `[10, 20, 30, 40, 50]`.
+
+Print the vector and the sum of its elements.
+
+```{r task3}
+# Task 3: Variables and Lists/Vectors
+numbers <- c(10, 20, 30, 40, 50)
+cat("Vector:", numbers, "\n")
+cat("Sum of elements:", sum(numbers), "\n")
+```
+
+# Task 4 – Plot Squares
+
+Create a vector of numbers from 1 to 10.
+
+Plot the numbers against their squares.
+
+```{r task4}
+# Task 4: Plot Squares
+# Create vector of numbers from 1 to 10
+numbers <- 1:10
+squares <- numbers^2
+
+# Create the plot
+plot(numbers, squares, 
+     type = "b", 
+     pch = 19, 
+     col = "blue",
+     lwd = 2,
+     xlab = "Numbers", 
+     ylab = "Squares",
+     main = "Numbers vs Their Squares",
+     grid = TRUE)
+```
+
+# Task 5 – Load Dataset
+
+Load `student_scores.csv` into your program.
+
+Display the first 5 rows.
+
+```{r task5}
+# Task 5: Load Dataset
+# Load the dataset
+df <- read.csv("../examples/student_scores.csv")
+
+# Display the first 5 rows
+cat("First 5 rows of the dataset:\n")
+print(head(df, 5))
+
+# Also display basic info about the dataset
+cat("\nDataset dimensions:", dim(df), "\n")
+cat("Column names:", names(df), "\n")
+```
+
+# Task 6 – Summary Statistics
+
+Print the average (mean) of the `Score` column.
+
+Print the minimum and maximum scores.
+
+```{r task6}
+# Task 6: Summary Statistics
+# Calculate and print the mean score
+mean_score <- mean(df$Score)
+cat("Average (mean) score:", round(mean_score, 2), "\n")
+
+# Calculate and print min and max scores
+min_score <- min(df$Score)
+max_score <- max(df$Score)
+cat("Minimum score:", min_score, "\n")
+cat("Maximum score:", max_score, "\n")
+
+# Additional summary statistics
+cat("\nComplete summary statistics:\n")
+print(summary(df$Score))
+```
+
+# Task 7 – Filtering Data
+
+Find and print the names of students who scored greater than 80.
+
+```{r task7}
+# Task 7: Filtering Data
+# Filter students with scores > 80
+high_scorers <- df[df$Score > 80, ]
+
+cat("Students who scored greater than 80:\n")
+print(high_scorers[, c("Name", "Score")])
+
+# Alternative: just print the names
+cat("\nNames of high scorers:\n")
+for(name in high_scorers$Name) {
+  cat("-", name, "\n")
+}
+```
+
+# Task 8 – Sorting Data
+
+Sort the dataset by `Score` in descending order.
+
+Display the top 3 students.
+
+```{r task8}
+# Task 8: Sorting Data
+# Sort by Score in descending order
+df_sorted <- df[order(df$Score, decreasing = TRUE), ]
+
+cat("Dataset sorted by score (descending):\n")
+print(df_sorted)
+
+cat("\nTop 3 students:\n")
+print(head(df_sorted[, c("Name", "Score")], 3))
+```
+
+# Task 9 – Visualization
+
+Create a histogram of scores.
+
+Add appropriate title and axis labels.
+
+```{r task9}
+# Task 9: Visualization
+# Create histogram of scores
+hist(df$Score, 
+     breaks = 10,
+     col = "skyblue",
+     border = "black",
+     xlab = "Score",
+     ylab = "Frequency",
+     main = "Distribution of Student Scores",
+     grid = TRUE)
+
+# Add mean line
+abline(v = mean(df$Score), col = "red", lty = 2, lwd = 2)
+legend("topright", legend = paste("Mean:", round(mean(df$Score), 1)), 
+       col = "red", lty = 2, lwd = 2)
+```
+
+# Additional Analysis (Bonus)
+
+Let's add some additional insights to make the analysis more comprehensive:
+
+```{r additional_analysis}
+# Additional Analysis
+cat("=== COMPREHENSIVE DATA ANALYSIS ===\n\n")
+
+# 1. Basic dataset information
+cat("Total number of students:", nrow(df), "\n")
+cat("Score range:", min(df$Score), "-", max(df$Score), "\n")
+cat("Score standard deviation:", round(sd(df$Score), 2), "\n")
+
+# 2. Grade distribution
+cat("\nGrade Distribution:\n")
+if(max(df$Score) <= 100) {
+  df$Grade <- cut(df$Score, breaks = c(0, 60, 70, 80, 90, 100), 
+                  labels = c("F", "D", "C", "B", "A"), include.lowest = TRUE)
+  print(table(df$Grade))
+}
+
+# 3. Performance categories
+cat("\nPerformance Categories:\n")
+df$Performance <- cut(df$Score, breaks = c(0, 70, 85, 100), 
+                      labels = c("Below Average", "Average", "Above Average"), 
+                      include.lowest = TRUE)
+print(table(df$Performance))
+
+# 4. Show all students with their performance
+cat("\nAll Students with Performance:\n")
+result_df <- df[, c("Name", "Score", "Performance")]
+result_df <- result_df[order(result_df$Score, decreasing = TRUE), ]
+print(result_df)
+```
+
+# Summary
+
+This document provides complete solutions to all Week 1 tasks:
+
+1. **Hello World**: Basic print statement
+2. **Simple Math**: Arithmetic operations and exponentiation
+3. **Variables and Lists/Vectors**: Vector creation and operations
+4. **Plot Squares**: Data visualization using base R plotting
+5. **Load Dataset**: CSV file loading and basic exploration
+6. **Summary Statistics**: Statistical measures of central tendency
+7. **Filtering Data**: Data subsetting based on conditions
+8. **Sorting Data**: Data ordering and top-N selection
+9. **Visualization**: Histogram creation with proper formatting
+
+All code runs without errors and includes appropriate comments. The analysis provides comprehensive insights into the student scores dataset.
+
+# Submission Notes
+
+- All code chunks run without errors
+- Appropriate comments included in the code
+- Plots are properly displayed with titles and labels
+- Additional analysis provided for comprehensive understanding
+- Solution saved as `Week1_Tasks_Solution.Rmd`
