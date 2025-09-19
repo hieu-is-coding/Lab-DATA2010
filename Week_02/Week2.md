@@ -75,6 +75,32 @@ Guidance:
 
 ---
 
+### Guidelines
+
+**Code Quality:**
+- Use clear, readable variable names and add brief comments for complex operations
+- Ensure all code cells run without errors when executed sequentially
+- Use consistent formatting and follow Python style conventions (PEP 8)
+- Import all required libraries at the beginning of the notebook
+
+**Data Analysis:**
+- Choose appropriate visualizations for your data types and research questions
+- Include clear titles, axis labels, and legends for all plots
+- Provide 2-3 sentence interpretations under each visualization
+- Justify your data cleaning decisions with brief explanations
+
+**Modeling:**
+- Use appropriate train/test splits (typically 80/20) with random seeds for reproducibility
+- Select baseline models suitable for your problem type (classification vs regression)
+- Report multiple relevant metrics and interpret what they mean for your specific dataset
+- Handle class imbalance if present (use stratified splits, class weights, or resampling)
+
+**Documentation:**
+- Write clear markdown cells explaining your approach for each major task
+- Include brief dataset description and any assumptions you make
+- Document any data quality issues you discover and how you address them
+- Provide actionable insights and concrete next steps in your final summary
+
 ### Deliverables
 
 Submit a Jupyter Notebook only (template provided in `Week_02/submission_template/`):
