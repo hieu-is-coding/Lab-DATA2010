@@ -66,6 +66,38 @@ Guidance:
 
 ---
 
+### Guidelines
+
+**Code Quality:**
+- Use clear, readable variable names and add brief comments for complex operations
+- Ensure the Rmd document knits to PDF without errors
+- Use consistent formatting and follow R style conventions (tidyverse style guide)
+- Load all required libraries in the setup chunk at the beginning
+
+**Data Analysis:**
+- Choose appropriate visualizations for your data types and research questions
+- Use ggplot2 for all plots with clear titles, axis labels, and themes
+- Provide 2-3 sentence interpretations under each visualization
+- Justify your data cleaning decisions with brief explanations
+
+**Modeling:**
+- Use appropriate train/test splits (typically 80/20) with set.seed() for reproducibility
+- Select baseline models suitable for your problem type (glm for classification/regression)
+- Report multiple relevant metrics and interpret what they mean for your specific dataset
+- Handle class imbalance if present (use stratified splits, class weights, or resampling)
+
+**Documentation:**
+- Write clear markdown sections explaining your approach for each major task
+- Include brief dataset description and any assumptions you make
+- Document any data quality issues you discover and how you address them
+- Provide actionable insights and concrete next steps in your final summary
+
+**R Markdown Best Practices:**
+- Use meaningful chunk names (e.g., `{r load-data}` instead of `{r}`)
+- Set `echo = TRUE` for code you want to show, `echo = FALSE` for setup/loading
+- Use `include = FALSE` for chunks that prepare data but don't need to appear in output
+- Ensure all plots render correctly in PDF format
+
 ### Deliverables
 
 Submit an R Markdown document only (template provided in `Week_03/submission_template/`):
