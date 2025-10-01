@@ -85,56 +85,5 @@ Write 3–5 short observations from EDA here.
 
 Key takeaway:
 
-# Task 6 — Class Imbalance (if applicable)
-
-```{r imbalance}
-# If classification target exists
-# data %>% count(target) %>% mutate(p = n/sum(n))
-```
-
-# Task 7 — Feature Engineering
-
-```{r fe}
-# Examples: date parts, one-hot via model.matrix, binning
-# data <- data %>% mutate(month = month(date_col), desc_len = nchar(text_col))
-```
-
-# Task 8 — Baseline Modeling
-
-```{r baseline}
-# Example classification baseline (edit to your data)
-# target <- "target"
-# numeric <- c("num1", "num2")
-# categorical <- c("cat1", "cat2")
-# dfm <- data %>% select(all_of(c(numeric, categorical, target))) %>% drop_na(all_of(c(numeric, categorical, target)))
-
-# # Simple train/test split
-# set.seed(42)
-# idx <- sample(nrow(dfm), size = floor(0.8 * nrow(dfm)))
-# train <- dfm[idx, ]
-# test  <- dfm[-idx, ]
-
-# # One-hot encode categoricals for glm
-# X <- model.matrix(as.formula(paste(target, "~ .")), data = train %>% select(-all_of(target)))[, -1]
-# y <- train[[target]]
-# fit <- glm(y ~ ., data = as.data.frame(cbind(y = y, X)), family = binomial())
-```
-
-# Task 9 — Evaluation
-
-```{r eval}
-# Example: predicted probabilities and simple metrics
-# X_test <- model.matrix(as.formula(paste(target, "~ .")), data = test %>% select(-all_of(target)))[, -1]
-# preds <- predict(fit, newdata = as.data.frame(X_test), type = "response")
-# pred_class <- if_else(preds > 0.5, 1, 0)
-# acc <- mean(pred_class == test[[target]])
-# tibble(accuracy = acc)
-```
-
-Provide a 2–4 sentence interpretation of the metrics and what they imply.
-
-# Task 10 — Findings and Next Steps
-
-Summarize 3–5 insights from EDA and modeling. Propose 2 concrete next steps to improve the analysis or model.
 
 

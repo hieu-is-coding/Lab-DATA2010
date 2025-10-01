@@ -41,29 +41,6 @@ Guidance:
 
 ---
 
-### Task 6 — Class Imbalance (if applicable)
-- If classification target exists, assess class proportions and apply one strategy if imbalance exists.
-
----
-
-### Task 7 — Feature Engineering
-- Create/transform at least 2 features useful for modeling; drop irrelevant columns if needed.
-
----
-
-### Task 8 — Baseline Modeling
-- Train a simple baseline model suitable for your problem (classification or regression). Show training code and predictions.
-
----
-
-### Task 9 — Evaluation
-- Use appropriate metrics and provide a short interpretation (2–4 sentences).
-
----
-
-### Task 10 — Findings and Next Steps
-- Summarize 3–5 insights and propose 2 next steps to improve the analysis/model.
-
 ---
 
 ### Guidelines
