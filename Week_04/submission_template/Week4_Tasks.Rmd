@@ -1,11 +1,7 @@
 ---
-title: "Week 4 Tasks — Data Visualization in R"
+title: "Week 4 Tasks — Advanced Data Analysis and Modeling (R)"
 author: "Your Name"
 output:
-  html_document:
-    toc: true
-    toc_float: true
-    df_print: paged
   pdf_document: default
 editor_options:
   chunk_output_type: inline
@@ -15,6 +11,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 library(lubridate)
+library(broom)
 theme_set(theme_minimal())
 ```
 
@@ -22,107 +19,104 @@ theme_set(theme_minimal())
 
 - Use this template to complete Week 4 tasks. Replace placeholders with your work.
 - Ensure the document can knit top-to-bottom without errors.
-- Add short captions/annotations below each plot.
+- Build upon your Week 3 analysis or use a new dataset.
+- Add short captions/annotations below each result.
 
-# Task 1 — Setup and Data Loading
+# Task 1 — Class Imbalance (if applicable)
 
-```{r load-data}
-# TODO: Set path and read your dataset
-# Example:
-# data <- read_csv("path/to/your.csv")
-# head(data, 10)
+```{r imbalance}
+# If classification target exists
+# data %>% count(target) %>% mutate(p = n/sum(n))
+
+# If imbalance exists, apply a strategy:
+# Example: SMOTE, class weights, or stratified sampling
+# library(ROSE)
+# balanced_data <- ROSE(target ~ ., data = data)$data
 ```
 
-Briefly describe the dataset and variables here.
+Brief description of your approach to handle class imbalance (if applicable).
 
-# Task 2 — Univariate Visualizations
+# Task 2 — Feature Engineering
 
-```{r univariate-numeric}
-# Example histogram/density for a numeric variable
-# ggplot(data, aes(numeric_col)) +
-#   geom_histogram(binwidth = 5, fill = "#2c7fb8") +
-#   labs(title = "Distribution of numeric_col", x = "numeric_col", y = "Count")
+```{r feature-engineering}
+# Examples: date parts, one-hot via model.matrix, binning, scaling
+# data <- data %>% 
+#   mutate(
+#     month = month(date_col),
+#     desc_len = nchar(text_col),
+#     numeric_binned = cut(numeric_col, breaks = 5)
+#   )
+
+# Create interaction terms or polynomial features if needed
+# data <- data %>% mutate(interaction = var1 * var2)
 ```
 
-Key takeaway:
+Describe the 2+ features you created and why they might be useful for modeling.
 
-```{r univariate-categorical}
-# Example bar plot for a categorical variable
-# data %>% count(category) %>%
-#   ggplot(aes(x = fct_reorder(category, n), y = n)) +
-#   geom_col(fill = "#7fcdbb") + coord_flip() +
-#   labs(title = "Counts by category", x = "Category", y = "Count")
+# Task 3 — Baseline Modeling
+
+```{r baseline-modeling}
+# Example classification baseline (adapt to your data)
+# target <- "target"
+# features <- c("feature1", "feature2", "feature3")
+# model_data <- data %>% select(all_of(c(features, target))) %>% drop_na()
+
+# Simple train/test split
+# set.seed(42)
+# idx <- sample(nrow(model_data), size = floor(0.8 * nrow(model_data)))
+# train <- model_data[idx, ]
+# test  <- model_data[-idx, ]
+
+# Fit baseline model (logistic regression for classification, lm for regression)
+# fit <- glm(as.formula(paste(target, "~ .")), data = train, family = binomial())
+# summary(fit)
 ```
 
-Key takeaway:
+Show your model training code and briefly describe your baseline approach.
 
-# Task 3 — Bivariate Visualizations
+# Task 4 — Evaluation
 
-```{r bivariate-scatter}
-# Example scatter with smooth
-# ggplot(data, aes(x = xvar, y = yvar)) +
-#   geom_point(alpha = 0.6) +
-#   geom_smooth(method = "lm", se = FALSE, color = "#fc8d59") +
-#   labs(title = "xvar vs yvar")
+```{r evaluation}
+# Generate predictions
+# preds <- predict(fit, newdata = test, type = "response")
+# pred_class <- if_else(preds > 0.5, 1, 0)
+
+# Calculate metrics
+# accuracy <- mean(pred_class == test[[target]])
+# 
+# # For classification: precision, recall, F1
+# library(caret)
+# confusionMatrix(factor(pred_class), factor(test[[target]]))
+#
+# # For regression: RMSE, MAE, R²
+# # rmse <- sqrt(mean((preds - test[[target]])^2))
+# # mae <- mean(abs(preds - test[[target]]))
+
+# Display key metrics
+# tibble(
+#   accuracy = accuracy,
+#   # Add other relevant metrics
+# )
 ```
 
-Interpretation:
+Provide a 2–4 sentence interpretation of your metrics and what they imply about model performance.
 
-```{r bivariate-box}
-# Example box/violin by category
-# ggplot(data, aes(x = category, y = numeric_col)) +
-#   geom_violin(fill = "#c7e9b4", alpha = 0.8) +
-#   geom_boxplot(width = 0.15, outlier.alpha = 0.2) +
-#   labs(title = "numeric_col by category")
-```
+# Task 5 — Findings and Next Steps
 
-Interpretation:
+## Key Insights
 
-# Task 4 — Multivariate Visualizations
+Summarize 3–5 insights from your analysis and modeling:
 
-```{r multivariate-facets}
-# Example facets
-# ggplot(data, aes(x = xvar, y = yvar, color = group)) +
-#   geom_point(alpha = 0.6) +
-#   facet_wrap(~ facet_var) +
-#   labs(title = "Relationship by facet_var")
-```
+1. 
+2. 
+3. 
+4. 
+5. 
 
-Short note:
+## Next Steps
 
-# Task 5 — Temporal or Composition Analysis
+Propose 2 concrete next steps to improve the analysis or model:
 
-```{r temporal-line}
-# Example time series (if applicable)
-# ggplot(data, aes(x = date_col, y = value)) +
-#   geom_line(color = "#2b8cbe") +
-#   labs(title = "Value over time", x = "Date", y = "Value")
-```
-
-Alternative composition example if no time variable is present:
-
-```{r composition}
-# Example stacked percentage bar
-# data %>% count(group, category) %>%
-#   group_by(group) %>% mutate(p = n/sum(n)) %>% ungroup() %>%
-#   ggplot(aes(x = group, y = p, fill = category)) +
-#   geom_col() + scale_y_continuous(labels = scales::percent) +
-#   labs(title = "Composition by group", y = "Percent", x = "Group")
-```
-
-# Task 6 — Geospatial (Bonus)
-
-```{r geospatial, eval=FALSE}
-# Optional: Use sf/leaflet/ggplot2 for maps if you have location data
-# library(sf)
-# library(leaflet)
-```
-
-# Task 7 — Aesthetics and Clarity
-
-List the style choices you made (titles, labels, themes, color choices).
-
-# Task 8 — Narrative and Reproducibility
-
-Write 5–10 sentences connecting the plots into a cohesive story and add final insights.
+1. 
+2. 
 
