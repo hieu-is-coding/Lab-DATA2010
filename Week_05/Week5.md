@@ -115,7 +115,7 @@ Guidance: Prefer tidy/tabular data; if your dataset needs light cleaning (rename
 
 Submit both in R and Python:
 
-- R: An R Markdown file `Week5_Tasks.Rmd` knitted to PDF
+- R: An R Markdown file `Week5_Tasks.Rmd` and `Week5_Tasks.pdf` (knitted to PDF)
 - Python: A Jupyter Notebook `Week5_Tasks.ipynb`
 
 Use the provided templates in `Week_05/submission_template/`.
