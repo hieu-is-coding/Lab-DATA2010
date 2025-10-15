@@ -39,7 +39,7 @@ Guidance: Prefer tidy/tabular data; if your dataset needs light cleaning (rename
 
 ---
 
-### Task 6 — Geospatial (Bonus)
+### Task 6 — Geospatial (Bonus) (Optional)
 - If latitude/longitude or regions exist, produce a simple map (choropleth or point map)
 - Briefly describe your mapping choices
 
