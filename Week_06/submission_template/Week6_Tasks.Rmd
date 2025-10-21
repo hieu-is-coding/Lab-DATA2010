@@ -1,0 +1,412 @@
+---
+title: "Week 6 Tasks - Data Wrangling in R"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Introduction to Data Wrangling in R
+
+This document demonstrates essential data wrangling skills using R and the tidyverse package. We will work through data loading, cleaning, transformation, and aggregation tasks.
+
+## Load Required Libraries
+
+```{r load-libraries}
+# Load required libraries
+library(tidyverse)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(VIM)  # For missing value visualization
+library(summarytools)  # For data summary
+```
+
+# Task 1: Data Loading and Initial Exploration
+
+## Load Dataset
+
+```{r data-loading}
+# Load your chosen dataset
+# Replace with your dataset path
+# data <- read_csv("path/to/your/dataset.csv")
+
+# For demonstration, we'll create a sample dataset with common data quality issues
+set.seed(123)
+sample_data <- data.frame(
+  id = 1:1000,
+  name = paste("Customer", 1:1000),
+  age = sample(c(18:80, NA), 1000, replace = TRUE),
+  income = round(rnorm(1000, 50000, 15000)),
+  city = sample(c("New York", "Los Angeles", "Chicago", "Houston", "Phoenix", NA), 1000, replace = TRUE),
+  purchase_date = sample(seq(as.Date('2020-01-01'), as.Date('2023-12-31'), by="day"), 1000, replace = TRUE),
+  product_category = sample(c("Electronics", "Clothing", "Books", "Home", "Sports"), 1000, replace = TRUE),
+  amount = round(runif(1000, 10, 500), 2),
+  stringsAsFactors = FALSE
+)
+
+# Introduce some data quality issues
+sample_data$age[sample(1:1000, 50)] <- NA
+sample_data$income[sample(1:1000, 30)] <- NA
+sample_data$city[sample(1:1000, 25)] <- NA
+sample_data$name[sample(1:1000, 10)] <- ""  # Empty strings
+sample_data$name[sample(1:1000, 5)] <- "   "  # Whitespace only
+
+# Display basic information
+cat("Dataset shape:", nrow(sample_data), "rows,", ncol(sample_data), "columns\n")
+cat("Column names:", paste(names(sample_data), collapse = ", "), "\n")
+```
+
+## Display First and Last Rows
+
+```{r display-rows}
+# First 10 rows
+head(sample_data, 10)
+
+# Last 5 rows
+tail(sample_data, 5)
+```
+
+## Data Types and Summary Statistics
+
+```{r data-summary}
+# Data types
+str(sample_data)
+
+# Summary statistics for numeric columns
+summary(sample_data)
+```
+
+## Identify Data Quality Issues
+
+```{r data-quality}
+# Check for missing values
+missing_summary <- sample_data %>%
+  summarise_all(~sum(is.na(.))) %>%
+  gather(variable, missing_count) %>%
+  mutate(missing_percentage = round(missing_count / nrow(sample_data) * 100, 2))
+
+print("Missing values by column:")
+missing_summary
+
+# Check for empty strings
+empty_strings <- sample_data %>%
+  summarise_all(~sum(. == "" | . == "   ", na.rm = TRUE)) %>%
+  gather(variable, empty_count)
+
+print("Empty strings by column:")
+empty_strings
+
+# Check for duplicates
+duplicate_count <- sum(duplicated(sample_data))
+cat("Number of duplicate rows:", duplicate_count, "\n")
+```
+
+# Task 2: Data Cleaning and Preprocessing
+
+## Handle Missing Values
+
+```{r handle-missing}
+# Create a copy for cleaning
+data_cleaned <- sample_data
+
+# Strategy 1: Remove rows with missing critical information (if any)
+# data_cleaned <- data_cleaned %>% filter(!is.na(id))
+
+# Strategy 2: Impute missing values
+# For age: use median
+data_cleaned$age[is.na(data_cleaned$age)] <- median(data_cleaned$age, na.rm = TRUE)
+
+# For income: use mean
+data_cleaned$income[is.na(data_cleaned$income)] <- mean(data_cleaned$income, na.rm = TRUE)
+
+# For city: use mode (most frequent)
+city_mode <- names(sort(table(data_cleaned$city), decreasing = TRUE))[1]
+data_cleaned$city[is.na(data_cleaned$city)] <- city_mode
+
+# Verify missing values after imputation
+cat("Missing values after imputation:\n")
+sapply(data_cleaned, function(x) sum(is.na(x)))
+```
+
+## Clean Text Data
+
+```{r clean-text}
+# Clean name column
+data_cleaned$name <- trimws(data_cleaned$name)  # Remove leading/trailing whitespace
+data_cleaned$name[data_cleaned$name == ""] <- "Unknown"  # Replace empty strings
+
+# Standardize city names (convert to title case)
+data_cleaned$city <- str_to_title(data_cleaned$city)
+
+# Clean product category
+data_cleaned$product_category <- str_trim(data_cleaned$product_category)
+```
+
+## Fix Data Types
+
+```{r fix-data-types}
+# Ensure proper data types
+data_cleaned$id <- as.integer(data_cleaned$id)
+data_cleaned$age <- as.integer(data_cleaned$age)
+data_cleaned$income <- as.numeric(data_cleaned$income)
+data_cleaned$amount <- as.numeric(data_cleaned$amount)
+data_cleaned$purchase_date <- as.Date(data_cleaned$purchase_date)
+
+# Verify data types
+str(data_cleaned)
+```
+
+## Remove Duplicates
+
+```{r remove-duplicates}
+# Check for duplicates
+duplicate_rows <- sum(duplicated(data_cleaned))
+cat("Duplicate rows found:", duplicate_rows, "\n")
+
+# Remove duplicates if any
+data_cleaned <- data_cleaned %>% distinct()
+
+cat("Rows after removing duplicates:", nrow(data_cleaned), "\n")
+```
+
+## Data Quality Report
+
+```{r quality-report}
+# Before cleaning
+cat("BEFORE CLEANING:\n")
+cat("Missing values:", sum(is.na(sample_data)), "\n")
+cat("Empty strings:", sum(sample_data$name == "" | sample_data$name == "   ", na.rm = TRUE), "\n")
+cat("Duplicate rows:", sum(duplicated(sample_data)), "\n")
+
+# After cleaning
+cat("\nAFTER CLEANING:\n")
+cat("Missing values:", sum(is.na(data_cleaned)), "\n")
+cat("Empty strings:", sum(data_cleaned$name == "" | data_cleaned$name == "   ", na.rm = TRUE), "\n")
+cat("Duplicate rows:", sum(duplicated(data_cleaned)), "\n")
+```
+
+# Task 3: Data Transformation and Feature Engineering
+
+## Create Derived Variables
+
+```{r create-features}
+# Create age groups
+data_cleaned <- data_cleaned %>%
+  mutate(
+    age_group = case_when(
+      age < 25 ~ "Young",
+      age >= 25 & age < 40 ~ "Adult",
+      age >= 40 & age < 60 ~ "Middle-aged",
+      age >= 60 ~ "Senior"
+    )
+  )
+
+# Create income categories
+data_cleaned <- data_cleaned %>%
+  mutate(
+    income_category = case_when(
+      income < 30000 ~ "Low",
+      income >= 30000 & income < 60000 ~ "Medium",
+      income >= 60000 ~ "High"
+    )
+  )
+
+# Create purchase amount categories
+data_cleaned <- data_cleaned %>%
+  mutate(
+    amount_category = case_when(
+      amount < 50 ~ "Small",
+      amount >= 50 & amount < 150 ~ "Medium",
+      amount >= 150 ~ "Large"
+    )
+  )
+```
+
+## Apply Mathematical Transformations
+
+```{r math-transformations}
+# Log transformation for income (to handle skewness)
+data_cleaned$log_income <- log(data_cleaned$income + 1)  # +1 to handle zero values
+
+# Square root transformation for amount
+data_cleaned$sqrt_amount <- sqrt(data_cleaned$amount)
+
+# Standardized income (z-score)
+data_cleaned$income_standardized <- (data_cleaned$income - mean(data_cleaned$income)) / sd(data_cleaned$income)
+```
+
+## Encode Categorical Variables
+
+```{r encode-categorical}
+# One-hot encoding for city
+city_dummies <- model.matrix(~ city - 1, data = data_cleaned)
+data_cleaned <- cbind(data_cleaned, city_dummies)
+
+# Label encoding for product category (using factor levels)
+data_cleaned$product_category_encoded <- as.numeric(factor(data_cleaned$product_category))
+
+# Show the encoded variables
+head(data_cleaned[, c("city", "product_category", "product_category_encoded")], 10)
+```
+
+## Create Time-based Features
+
+```{r time-features}
+# Extract time components
+data_cleaned <- data_cleaned %>%
+  mutate(
+    purchase_year = year(purchase_date),
+    purchase_month = month(purchase_date),
+    purchase_quarter = quarter(purchase_date),
+    purchase_day_of_week = wday(purchase_date, label = TRUE),
+    purchase_season = case_when(
+      purchase_month %in% c(12, 1, 2) ~ "Winter",
+      purchase_month %in% c(3, 4, 5) ~ "Spring",
+      purchase_month %in% c(6, 7, 8) ~ "Summer",
+      purchase_month %in% c(9, 10, 11) ~ "Fall"
+    )
+  )
+
+# Show time-based features
+head(data_cleaned[, c("purchase_date", "purchase_year", "purchase_month", "purchase_season")], 10)
+```
+
+# Task 4: Data Aggregation and Grouping Operations
+
+## Groupby Operations with Multiple Aggregations
+
+```{r groupby-aggregations}
+# Aggregate by age group
+age_group_summary <- data_cleaned %>%
+  group_by(age_group) %>%
+  summarise(
+    count = n(),
+    avg_income = mean(income, na.rm = TRUE),
+    median_income = median(income, na.rm = TRUE),
+    total_amount = sum(amount, na.rm = TRUE),
+    avg_amount = mean(amount, na.rm = TRUE),
+    .groups = 'drop'
+  )
+
+print("Summary by Age Group:")
+age_group_summary
+```
+
+## Pivot Tables and Cross-tabulations
+
+```{r pivot-tables}
+# Cross-tabulation of age group and income category
+age_income_crosstab <- data_cleaned %>%
+  group_by(age_group, income_category) %>%
+  summarise(count = n(), .groups = 'drop') %>%
+  pivot_wider(names_from = income_category, values_from = count, values_fill = 0)
+
+print("Age Group vs Income Category Cross-tabulation:")
+age_income_crosstab
+
+# Pivot table for product category and city
+product_city_pivot <- data_cleaned %>%
+  group_by(product_category, city) %>%
+  summarise(total_amount = sum(amount), .groups = 'drop') %>%
+  pivot_wider(names_from = city, values_from = total_amount, values_fill = 0)
+
+print("Product Category vs City Pivot Table:")
+product_city_pivot
+```
+
+## Summary Statistics by Groups
+
+```{r group-summaries}
+# Summary by product category
+product_summary <- data_cleaned %>%
+  group_by(product_category) %>%
+  summarise(
+    count = n(),
+    avg_amount = mean(amount),
+    median_amount = median(amount),
+    min_amount = min(amount),
+    max_amount = max(amount),
+    total_revenue = sum(amount),
+    .groups = 'drop'
+  ) %>%
+  arrange(desc(total_revenue))
+
+print("Summary by Product Category:")
+product_summary
+
+# Summary by season
+seasonal_summary <- data_cleaned %>%
+  group_by(purchase_season) %>%
+  summarise(
+    count = n(),
+    avg_amount = mean(amount),
+    total_revenue = sum(amount),
+    .groups = 'drop'
+  ) %>%
+  arrange(desc(total_revenue))
+
+print("Seasonal Summary:")
+seasonal_summary
+```
+
+## Final Processed Dataset
+
+```{r final-dataset}
+# Create final cleaned and transformed dataset
+final_dataset <- data_cleaned %>%
+  select(
+    id, name, age, age_group, income, income_category, income_standardized,
+    city, product_category, product_category_encoded,
+    purchase_date, purchase_year, purchase_month, purchase_quarter, 
+    purchase_day_of_week, purchase_season,
+    amount, amount_category, sqrt_amount
+  )
+
+# Display final dataset structure
+cat("Final dataset shape:", nrow(final_dataset), "rows,", ncol(final_dataset), "columns\n")
+cat("Final dataset columns:", paste(names(final_dataset), collapse = ", "), "\n")
+
+# Show sample of final dataset
+head(final_dataset, 10)
+```
+
+## Data Quality Validation
+
+```{r validation}
+# Final data quality check
+cat("FINAL DATA QUALITY CHECK:\n")
+cat("Missing values:", sum(is.na(final_dataset)), "\n")
+cat("Duplicate rows:", sum(duplicated(final_dataset)), "\n")
+cat("Data types:\n")
+str(final_dataset)
+
+# Summary of transformations applied
+cat("\nTRANSFORMATIONS APPLIED:\n")
+cat("1. Missing value imputation\n")
+cat("2. Text cleaning and standardization\n")
+cat("3. Age group categorization\n")
+cat("4. Income categorization\n")
+cat("5. Amount categorization\n")
+cat("6. Mathematical transformations (log, sqrt, standardization)\n")
+cat("7. One-hot encoding for city\n")
+cat("8. Label encoding for product category\n")
+cat("9. Time-based feature extraction\n")
+cat("10. Comprehensive aggregation and grouping\n")
+```
+
+# Conclusion
+
+This data wrangling exercise demonstrates essential skills for preparing data for analysis:
+
+1. **Data Loading**: Successfully imported and explored the dataset
+2. **Data Cleaning**: Handled missing values, cleaned text, and removed duplicates
+3. **Data Transformation**: Created derived variables, applied mathematical transformations, and encoded categorical variables
+4. **Data Aggregation**: Performed comprehensive grouping and aggregation operations
+
+The final dataset is now ready for further analysis, modeling, or visualization tasks.
