@@ -2,7 +2,10 @@
 
 Using a dataset you find interesting (or the example Uber dataset linked below), create a concise but insightful data visualization report. Focus on effective chart selection, clear aesthetics, and telling a data story. You may complete the tasks in either R (ggplot2) or Python (seaborn/matplotlib). Templates are provided in `Week_05/submission_template`.
 
-Reference dataset (optional): [Uber Data Analytics Dashboard](https://www.kaggle.com/datasets/yashdevladdha/uber-ride-analytics-dashboard/data)
+Reference dataset (optional): 
+- [Uber Data Analytics Dashboard](https://www.kaggle.com/datasets/yashdevladdha/uber-ride-analytics-dashboard/data)
+- [Earthquake stunami risk](https://www.kaggle.com/datasets/ahmeduzaki/global-earthquake-tsunami-risk-assessment-dataset/data)
+- [International Airport Flights](https://www.kaggle.com/datasets/mohammedalsubaie/king-khalid-international-airport-flights-dataset)
 
 Guidance: Prefer tidy/tabular data; if your dataset needs light cleaning (rename columns, parse dates), do that in the notebook/Rmd before plotting.
 
@@ -36,7 +39,7 @@ Guidance: Prefer tidy/tabular data; if your dataset needs light cleaning (rename
 
 ---
 
-### Task 6 — Geospatial (Bonus)
+### Task 6 — Geospatial (Bonus) (Optional)
 - If latitude/longitude or regions exist, produce a simple map (choropleth or point map)
 - Briefly describe your mapping choices
 
@@ -110,10 +113,11 @@ Guidance: Prefer tidy/tabular data; if your dataset needs light cleaning (rename
 
 ### Deliverables
 
-Submit both in R and Python:
+Submit:
 
-- R: An R Markdown file `Week5_Tasks.Rmd` knitted to PDF
-- Python: A Jupyter Notebook `Week5_Tasks.ipynb`
+- R: An R Markdown file `Week5_Tasks.Rmd` and `Week5_Tasks.pdf` (knitted to PDF) (10 point)
+- Python: A Jupyter Notebook `Week5_Tasks.ipynb` (Optional)(Bonus Point)
+(5 point)
 
 Use the provided templates in `Week_05/submission_template/`.
 
