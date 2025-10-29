@@ -10,7 +10,7 @@ Reference datasets (choose one or use your own):
 Guidance: Start with simple models to focus on TensorBoard features rather than complex model architectures.
 
 Tutorial page: [TensorBoard](https://www.tensorflow.org/tensorboard/get_started)
-
+Pytorch TensorBoard: [Pytorch TensorBoard](https://docs.pytorch.org/tutorials/intermediate/tensorboard_tutorial.html)
 ---
 
 ### Task 1 — Basic TensorBoard Setup and Logging
