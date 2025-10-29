@@ -8,9 +8,10 @@ Reference datasets (choose one or use your own):
 - [Iris Flowers](https://www.tensorflow.org/datasets/catalog/iris) - Simple classification dataset
 
 Guidance: Start with simple models to focus on TensorBoard features rather than complex model architectures.
-
+Some tutorials:
 Tutorial page: [TensorBoard](https://www.tensorflow.org/tensorboard/get_started)
 Pytorch TensorBoard: [Pytorch TensorBoard](https://docs.pytorch.org/tutorials/intermediate/tensorboard_tutorial.html)
+Neptune ai: [Deep dive into TensorBoard](https://neptune.ai/blog/tensorboard-tutorial)
 ---
 
 ### Task 1 — Basic TensorBoard Setup and Logging
