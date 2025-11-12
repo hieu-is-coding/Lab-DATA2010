@@ -15,7 +15,6 @@ Some tutorials:
 - Scikit-learn Documentation: [Clustering](https://scikit-learn.org/stable/modules/clustering.html)
 - MLxtend Library: [Association Rules](https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/association_rules/)
 - Scikit-learn: [Anomaly Detection](https://scikit-learn.org/stable/modules/outlier_detection.html)
-- Towards Data Science: [Introduction to Data Mining](https://towardsdatascience.com/data-mining-in-python-a-guide-9a4af12e62ea)
 
 ---
 
