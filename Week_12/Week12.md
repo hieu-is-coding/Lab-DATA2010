@@ -219,7 +219,7 @@ Extract data from REST APIs using the `requests` library.
        print(f"Error: {response.status_code}")
    
    # Example 2: REST Countries API
-   url = 'https://restcountries.com/v3.1/all'
+   url = 'https://restcountries.com/v3.1/all?fields=name
    response = requests.get(url)
    
    if response.status_code == 200:
